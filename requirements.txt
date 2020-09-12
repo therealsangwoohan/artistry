@@ -1,6 +1,8 @@
 networkx==2.5
+scikit_image==0.17.2
 Flask==1.1.2
 requests==2.24.0
 matplotlib==3.3.1
 beautifulsoup4==4.9.1
+skimage==0.0
 gunicorn
