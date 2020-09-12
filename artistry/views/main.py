@@ -11,7 +11,12 @@ def index():
 @app.route("/search_artist/", methods=["GET", "POST"])
 def searchArtist():
     if request.method == "POST":
-        referenceCount = {"Donald Trump": 3, "2Pac": 5, "Snoop Dogg": 11}
+        referenceCount = {"Donald Trump": 3,
+                          "2Pac": 5,
+                          "Snoop Dogg": 11,
+                          "Meek Mill": 11,
+                          "Adam Smith": 1,
+                          "Kendrick Lamar": 1}
         img = getGraph(request.form["artistName"], referenceCount)
         return render_template("artist_info.html", img=img)
 

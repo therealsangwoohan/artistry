@@ -32,7 +32,7 @@ def getGraph(enteredArtistName, referenceCount):
         G.add_edge(enteredArtistName, artistName)
 
     pos = nx.circular_layout(G)
-    fig = plt.figure(figsize=(5, 5))
+    fig = plt.figure(figsize=(G.size(), G.size()))
     ax = plt.subplot(111)
     ax.set_aspect('equal')
     nx.draw_networkx_edges(G, pos, ax=ax)
