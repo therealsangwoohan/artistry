@@ -1,6 +1,7 @@
 from artistry import app
 from flask import render_template, redirect, request
 from artistry.core.graph import getGraph
+from artistry.core.lyrics import find_connection
 
 
 @app.route("/")
@@ -11,13 +12,9 @@ def index():
 @app.route("/search_artist/", methods=["GET", "POST"])
 def searchArtist():
     if request.method == "POST":
-        referenceCount = {"Donald Trump": 3,
-                          "2Pac": 5,
-                          "Snoop Dogg": 11,
-                          "Meek Mill": 11,
-                          "Adam Smith": 1,
-                          "Kendrick Lamar": 1}
-        img = getGraph(request.form["artistName"], referenceCount)
+        artistName = request.form["artistName"]
+        connections = find_connection(artistName)
+        img = getGraph(artistName, connections)
         return render_template("artist_info.html", img=img)
 
     return render_template("search_artist.html")

@@ -103,7 +103,7 @@ def clean_lyrics(songs):
     return names
 
 def find_nicknames(artist):
-    '''
+    ''' 
     finds artist nicknames found on Genius website through GeniusAPI.
     returns literable of strings of alternate names
     '''

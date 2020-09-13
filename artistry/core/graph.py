@@ -7,9 +7,10 @@ import base64
 from skimage import io
 from bs4 import BeautifulSoup
 import requests
+from PIL import Image
 
 
-def getArtistImageURL(artistName):
+def __getArtistImageURL(artistName):
     url = f'https://en.wikipedia.org/wiki/{artistName}'
     # get contents from url
     content = requests.get(url).content
@@ -21,14 +22,19 @@ def getArtistImageURL(artistName):
     return f"https:{image_tag['src']}"
 
 
-def getGraph(enteredArtistName, referenceCount):
+def __getImgFromURL(url):
+    response = requests.get(url)
+    return Image.open(BytesIO(response.content))
+
+
+def getGraph(enteredArtistName, connections):
     G = nx.Graph()
-    url = getArtistImageURL(enteredArtistName)
-    G.add_node(enteredArtistName, image=io.imread(url))
-    for artistName in referenceCount:
-        url = getArtistImageURL(artistName)
+    url = __getArtistImageURL(enteredArtistName)
+    G.add_node(enteredArtistName, image=__getImgFromURL(url))
+    for artistName in connections:
+        url = connections[artistName][1]
         G.add_node(artistName,
-                   image=io.imread(url))
+                   image=__getImgFromURL(url))
         G.add_edge(enteredArtistName, artistName)
 
     pos = nx.circular_layout(G)
@@ -44,7 +50,7 @@ def getGraph(enteredArtistName, referenceCount):
     trans2 = fig.transFigure.inverted().transform
 
     # this is the image size
-    piesize = 0.2
+    piesize = 0.1
     p2 = piesize / 2.0
     for n in G.nodes():
         # figure coordinates
@@ -63,3 +69,4 @@ def getGraph(enteredArtistName, referenceCount):
     img.seek(0)
     plt.clf()
     return pngImageB64String
+
