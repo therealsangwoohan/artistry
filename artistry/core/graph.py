@@ -28,13 +28,12 @@ def __getImgFromURL(url):
 
 def getGraph(enteredArtistName, connections):
     G = nx.Graph()
-    url = __getArtistImageURL(enteredArtistName)
-    G.add_node(enteredArtistName, image=__getImgFromURL(url))
     for artistName in connections:
         url = connections[artistName][1]
         G.add_node(artistName,
                    image=__getImgFromURL(url))
-        G.add_edge(enteredArtistName, artistName)
+        if artistName != enteredArtistName:
+            G.add_edge(enteredArtistName, artistName)
 
     pos = nx.circular_layout(G)
     fig = plt.figure(figsize=(G.size(), G.size()))
