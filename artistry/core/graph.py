@@ -4,7 +4,6 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
-from skimage import io
 from bs4 import BeautifulSoup
 import requests
 from PIL import Image
